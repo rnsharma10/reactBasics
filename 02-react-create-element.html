@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/javascript">
+        const rootElement = document.getElementById('root')
+        /* 
+        NOTE: 
+        React.createElement(htmlTag, props, ...childrenArray)
+        htmlTag - div, h1-h6, span etc
+        props: we can give children, className properties where children can be some text or array of text
+        in childrenArray we can give text which are comma separated
+        */
+        // NOTE: create element using props
+        /* const element = React.createElement('div',{
+            children: 'hello world',
+            className: 'container2'
+        }) */
+        
+        // NOTE: create element by passing children in 3rd argument
+        /* const element = React.createElement('div',{
+            className: 'container2'
+        }, 'Hello world') */
+
+        // NOTE: by passing array of children inside props
+        /* const element = React.createElement('div', {
+            children: ['Hello', 'World'],
+            className: 'container2'
+        }) */
+
+        // NOTE: by calling createelement function inside the children props
+         
+        /* const element = React.createElement('div', {
+            children: React.createElement('span', null, 'Hello', 'World'),
+            className: 'container'
+        }) */
+        
+       
+        // NOTE: by passing comma separated children text in 3rd and onward arguments
+        const element = React.createElement('div', {
+            className: 'container2'
+        }, 'Hello', ' world')
+
+        console.log(element)
+        ReactDOM.render(element, rootElement)
+        
+        /*
+        const element = document.createElement('div')
+        element.textContent = "Hello World"
+        element.className = "container"
+        rootElement.appendChild(element) */
+
+    </script>
+</body>
+</html>
+

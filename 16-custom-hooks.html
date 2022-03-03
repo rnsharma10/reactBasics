@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // NOTE: create custom hook for general purpose
+    // took care of initializing the state variable, use useEffect hook to rerender component on change and also use localStorage to keep the value saved on accidental refresh
+    // declare the hooks with use_______ for naming convention
+    function useLocalStorageState(key, defaultValue=''){
+      const [state, setState] = React.useState(
+        () => {
+          return window.localStorage.getItem(key) || defaultValue
+        }
+      )
+      React.useEffect(() => {
+        window.localStorage.setItem(key, state)
+      }, [key, state])
+      return [state, setState]
+    }
+    
+    
+    function Greeting(){
+      const [name, setName] = useLocalStorageState('name')
+      const handleChange = event => setName(event.target.value)
+      return (
+        <div>
+          <form action="">
+            <label htmlFor="name">Name</label>
+            <input value={name} onChange={handleChange} id="name"/>
+
+          </form>
+          {name ? <strong>Hello {name}</strong> : 'Please type your name'}
+        </div>
+      )
+    }
+
+    function App(){
+      const [count, setCount] = React.useState(0)
+      return (
+        <>
+          <button onClick={() => setCount(count+1)}>{count}</button>
+          <Greeting/>
+        </>
+      )
+    }
+    ReactDOM.render(<App/>, document.getElementById('root'))
+  </script> 
+</body>
+
+</html>

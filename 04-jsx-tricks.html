@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const rootElement = document.getElementById('root')
+        const children = "hello jsx again"
+        const className = 'container'
+        // NOTE: the curly braces can contain javascript code which can either be variable name, any logic, function call etc
+        /* const element = (
+            <div className={className}>
+                {children}
+                <span><strong>The rise of JSX</strong></span>
+            </div>
+        ) */
+        
+        // NOTE: self closing tags
+        // we can pass children as children props
+        /* const element = (
+            <div class={className} children={children} />
+        ) */
+
+        // NOTE: pass props argument as collective obj
+        /* const props = {children, className}
+        const element = <div {...props}/> */
+
+        // NOTE: override props
+        // tip whoever comes last in the props/properties will be the winner and override props
+        const props = {children, className}
+
+        const element = (
+            <div id="app-root" {...props} className="new-container"></div>
+        )
+        console.log(element)
+        ReactDOM.render(element, rootElement)
+        
+
+    </script>
+</body>
+</html>
+

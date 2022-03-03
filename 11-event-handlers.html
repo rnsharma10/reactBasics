@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+  <title>Document</title>
+  <style>
+    .box {
+      border: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .box--large{
+      width:270px;
+      height: 270px;
+    }
+
+    .box--medium{
+      width:180px;
+      height: 180px;
+    }
+
+    .box--small{
+      width:90px;
+      height: 90px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+  const state = {eventCount: 0, username: ''}
+
+  function App(){
+    // NOTE: call these functions on event
+    function handleClick(){
+      setState({eventCount: state.eventCount+1})
+    }
+    function handleInput(event){
+      console.log(event);
+      setState({username: event.target.value})
+    }
+    return (
+      <div>
+        <p>There have been {state.eventCount} events.</p>
+        <p><button onClick={handleClick}> click me</button></p>
+        <p>You typed: {state.username}</p>
+        <p><input onChange={handleInput}/></p>
+      </div>
+    )
+  }
+
+  // NOTE: Object.assign is used to assign/override the props/attributes of object
+  function setState(newState){
+    Object.assign(state, newState)
+    // NOTE: call render function on change in state
+    renderApp()
+  }
+
+  function renderApp(){
+    ReactDOM.render(<App/>, document.getElementById('root'))
+  }
+
+  renderApp()
+
+  </script>
+</body>
+
+</html>

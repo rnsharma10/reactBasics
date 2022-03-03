@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+
+
+
+    function Greeting(){
+      const [name, setName] = React.useState(
+        // NOTE: lazy loading, give a callback function which will only run when necessary
+        () => {
+          console.log('from state')
+          return window.localStorage.getItem('inputName') || ''
+        }
+      )
+      console.log('rendered')
+      React.useEffect(() => {
+        window.localStorage.setItem('inputName', name)
+      })
+      const handleChange = event => setName(event.target.value)
+      return (
+        <div>
+          <form action="">
+            <label htmlFor="name">Name</label>
+            <input value={name} onChange={handleChange} id="name"/>
+
+          </form>
+          {name ? <strong>Hello {name}</strong> : 'Please type your name'}
+        </div>
+      )
+    }
+
+    ReactDOM.render(<Greeting/>, document.getElementById('root'))
+  </script> 
+</body>
+
+</html>
