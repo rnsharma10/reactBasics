@@ -21,35 +21,41 @@
     
     
     function UsernameForm(){
-      // NOTE: useRef to get the input entered value
-      const usernameInputRef = React.useRef()
+      const [username, setUsername] = React.useState('')
+      const [warning, setWarning] = React.useState(null)
+      console.log("hi");
       const handleSubmit = (event) => {
-        // NOTE: after submission of form, if no target is given, it will refresh the [same] page
-        // to stop form to refresh the page call preventDefault method
         event.preventDefault()
-        console.dir(event.target);
-        // NOTE: not a good practice
-        // const username = document.querySelector('input').value
-
-        // NOTE: since getting the particular element through indexing is
-        // not safe since the index/position of html inputs can change, so
-        // better to call them either using id/name value which will be saved
-        // in the dom props elements
-        // const username = event.target[0].value
-        // const username = event.target.elements[0].value
+        // NOTE: Dont uncomment it
+        // now we dont need to get the username from form since
+        // we have username from useState hook available
         // const username = event.target.elements.usernameInput.value
-        const username = usernameInputRef.current.value
-        // console.log(usernameInputRef);
+        
+        
         alert(`name: ${username}`)
+        console.log(username);
       }
+      const handleChange = (event) => {
+        
+        setWarning(
+          (event.target.value === event.target.value.toLowerCase()) ? 
+          null : 'characters will be converted to lower case'
+        )
+        // NOTE: we can forcefully set the uppercase to lowercase
+        // not recommended due to poor UI exp since user can type uppercase
+        // in the input field but the value stored in the state will be converted to lowercase - resulting in out of sync for input and state
+        setUsername(event.target.value.toLowerCase())
+        // to tackle this, put value prop in input tag with value username
 
+      }
       return (
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="usernameInput">Username: </label>
-            {/*'we can use name instead of id to access the value of input'*/}
-            <input ref={usernameInputRef} type="text" id="usernameInput"/>
+            <input type="text" id="usernameInput" onChange={handleChange}
+            value={username}/>
           </div>
+          <div style={{color: 'grey'}}>{warning}</div>
           <button type="submit">Submit</button>
         </form>
       )
