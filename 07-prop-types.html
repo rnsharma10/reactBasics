@@ -29,7 +29,8 @@
           string(props, propName, componentName){
             if(typeof props[propName] !== 'string'){
               
-              return new Error(`Hey the component ${componentName} needs the prop ${propName} to be a string but you passed ${typeof props[propName]}`)
+              return new Error(`Hey the component ${componentName} needs the prop 
+              ${propName} to be a string but you passed ${typeof props[propName]}`)
             }
           }
         }
@@ -38,7 +39,8 @@
           lastName: PropTypes.string
         } */
 
-        // NOTE: if we use the prop-types package then we get a global variable PropTypes which we can use to declare the proptypes of props
+        // NOTE: if we use the prop-types package then we get a global variable 
+        // PropTypes which we can use to declare the proptypes of props
         SayHello.propTypes = {
           firstName: PropTypes.string.isRequired,
           lastName: PropTypes.string

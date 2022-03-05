@@ -16,7 +16,8 @@
         const rootElement = document.getElementById('root')
         const children = "hello jsx again"
         const className = 'container'
-        // NOTE: the curly braces can contain javascript code which can either be variable name, any logic, function call etc
+        // NOTE: the curly braces can contain javascript code which can either be variable
+        //  name, any logic, function call etc but it should be only expression
         /* const element = (
             <div className={className}>
                 {children}
@@ -35,7 +36,8 @@
         const element = <div {...props}/> */
 
         // NOTE: override props
-        // tip whoever comes last in the props/properties will be the winner and override props
+        // tip whoever comes last in the props/properties will be the winner and override 
+        // before coming props
         const props = {children, className}
 
         const element = (

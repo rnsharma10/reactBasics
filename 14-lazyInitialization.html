@@ -19,10 +19,10 @@
 
 
 
-
+    // NOTE: lazy loading, give a callback function in useState which will only run 
+    // when necessary
     function Greeting(){
       const [name, setName] = React.useState(
-        // NOTE: lazy loading, give a callback function which will only run when necessary
         () => {
           console.log('from state')
           return window.localStorage.getItem('inputName') || ''

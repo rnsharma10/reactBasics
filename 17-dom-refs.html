@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <title>Document</title>
+  <style>
+    .tilt-root {
+      height: 150px;
+      background-color: red;
+      width: 200px;
+      background-image: -webkit-linear-gradient(
+        315deg,
+        #ff00ba 0%,
+        #fae713 100%
+      );
+      background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg)
+        scale3d(1, 1, 1);
+    }
+    .tilt-child {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translateZ(30px) translateX(-50%) translateY(-50%);
+      box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
+      background-color: white;
+    }
+    .totally-centered {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // NOTE: whever dealing with component argument, always destructure them
+    // so that these can be used directly instead of props.children
+    function Tilt({children}){
+      const tiltRef = React.useRef()
+      React.useEffect(()=>{
+        const tiltNode = tiltRef.current
+        const vanillaTiltOptions = {
+          max: 25,
+          speed: 400,
+          glare: true,
+          'max-glare': 0.5,
+        }
+        VanillaTilt.init(tiltNode, vanillaTiltOptions)
+
+      },[])
+      console.log(tiltRef.current)
+      return (
+        <div ref={tiltRef} className='tilt-root'>
+          <div className='tilt-child'>{children}</div>
+        </div>
+      )
+    }
+    function App() {
+      const [showTilt, setShowTilt] = React.useState(true)
+      return (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={showTilt}
+              onChange={e => setShowTilt(e.target.checked)}
+            />{' '}
+            show tilt
+          </label>
+          {showTilt ? (
+            <Tilt>
+              <div className="totally-centered">vanilla-tilt.js</div>
+            </Tilt>
+          ) : null}
+        </div>
+      )
+    }
+    ReactDOM.render(<App/>, document.getElementById('root'))
+  </script> 
+</body>
+
+</html>

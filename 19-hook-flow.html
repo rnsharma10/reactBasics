@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <title>Document</title>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    
+
+
+    function Child(){
+      console.log('%c    Child: render Start', 'color: MediumSpringGreen')
+      // NOTE: state initialization
+      const [count, setCount] = React.useState(() =>{
+        console.log(
+          '%c    Child: useState callback', 
+          'color: tomato'
+        )
+        return 0
+      })
+      // NOTE: no deps
+      // called on mount to create instance of returned callback 
+      // the callback is called during update/unmount
+      React.useEffect(() => {
+        console.log(
+          '%c    Child: useEffect no deps', 
+          'color: LightCoral'
+        )
+        return () => {
+          console.log(
+            '%c    Child: useEffect no deps cleanup', 
+            'color: LightCoral'
+          )
+
+        }
+      })
+      // NOTE: empty deps
+      // called on mount to create instance of returned callback 
+      // the callback is called during unmount
+      React.useEffect(() => {
+        console.log(
+          '%c    Child: useEffect empty deps', 
+          'color: MediumTurquoise'
+        )
+        return () => {
+          console.log(
+            '%c    Child: useEffect empty deps cleanup', 
+            'color: MediumTurquoise'
+          )
+
+        }
+      }, [])
+      // NOTE: with deps
+      // called on mount to create instance of returned callback 
+      // the callback is called during update(only for the deps update)/unmount
+      React.useEffect(() => {
+        console.log(
+          '%c    Child: useEffect with deps', 
+          'color: HotPink'
+        )
+        return () => {
+          console.log(
+            '%c    Child: useEffect with deps cleanup', 
+            'color: HotPink'
+          )
+
+        }
+      }, [count])
+
+      const element = (
+        <button onClick={() => setCount(previousCount => previousCount+1)}>
+          {count}
+        </button>
+      )
+
+      console.log('%c    Child: render end', 'color: MediumSpringGreen')
+      
+      return element
+    }
+
+    function App() {
+      console.log('%c App: render start', 'color: MediumSpringGreen')
+      const [showChild, setShowChild] = React.useState(() =>{
+        console.log(
+          '%c App: useState callback', 
+          'color: tomato'
+        )
+        return false
+      })
+      // NOTE: no deps
+      React.useEffect(() => {
+        console.log(
+          '%c App: useEffect no deps', 
+          'color: LightCoral'
+        )
+        return () => {
+          console.log(
+            '%c App: useEffect no deps cleanup', 
+            'color: LightCoral'
+          )
+
+        }
+      })
+      // NOTE: empty deps
+      React.useEffect(() => {
+        console.log(
+          '%c App: useEffect empty deps', 
+          'color: MediumTurquoise'
+        )
+        return () => {
+          console.log(
+            '%c App: useEffect empty deps cleanup', 
+            'color: MediumTurquoise'
+          )
+
+        }
+      }, [])
+      // NOTE: with deps
+      React.useEffect(() => {
+        console.log(
+          '%c App: useEffect with deps', 
+          'color: HotPink'
+        )
+        return () => {
+          console.log(
+            '%c App: useEffect with deps cleanup', 
+            'color: HotPink'
+          )
+
+        }
+      }, [showChild])
+
+      const element = (
+        <>
+          <label>
+            <input
+              type="checkbox"
+              checked={showChild}
+              onChange={e => setShowChild(e.target.checked)}
+            />{' '}
+            show child
+          </label>
+          <div
+            style={{
+              padding: 10,
+              margin: 10,
+              height: 30,
+              width: 30,
+              border: 'solid',
+            }}
+          >
+            {showChild ? <Child /> : null}
+          </div>
+        </>
+      )
+      console.log('%c App: render end', 'color: MediumSpringGreen')
+      return element
+    }
+    
+
+    ReactDOM.render(<App />, document.getElementById('root'))
+  </script> 
+</body>
+
+</html>

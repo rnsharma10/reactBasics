@@ -41,8 +41,10 @@
 
   <script type="text/babel">
   
-  // NOTE: here we can see that style component expects object so for that first braces are for executing javascript, second braces are to create the object {{}}
-  // too many repeatation to achieve this so we will create a function Box to do some of the repeative stuff
+  // NOTE: here we can see that style component expects object so for that first 
+  // braces are for executing javascript, second braces are to create the object {{}}
+  // too many repeatation to achieve this so we will create a function Box to do some 
+  // of the repeative stuff
   
   function Box({size, style='',...rest}){
     const sizeClassName = size ? `box--${size}` : ''

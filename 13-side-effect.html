@@ -21,14 +21,18 @@
 
 
     function Greeting(){
-      // NOTE: useState is used to maintain the initial value and also the set new value and re-render the component.
-      // We can set the state as string, boolean, object, array and many more type of datatypes
+      // NOTE: useState is used to maintain the initial value and also the set new value 
+      // and re-render the component.
+      // We can set the state as string, boolean, object, array and many more 
+      // type of datatypes
       const [name, setName] = React.useState(
         window.localStorage.getItem('inputName') || '',
       )
 
-      // NOTE: UseEffect : this will be called after everytime greeting component is rendered.
-      // since we want to save the input we can save it in browser local storage and get it back and use it in useState hook
+      // NOTE: UseEffect : this will be called after everytime greeting component is 
+      // rendered.
+      // since we want to save the input we can save it in browser local storage and 
+      // get it back and use it in useState hook
       React.useEffect(() => {
         window.localStorage.setItem('inputName', name)
       })

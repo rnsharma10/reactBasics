@@ -17,7 +17,8 @@
   <div id="root"></div>
   <script type="text/babel">
     // NOTE: create custom hook for general purpose
-    // took care of initializing the state variable, use useEffect hook to rerender component on change and also use localStorage to keep the value saved on accidental refresh
+    // took care of initializing the state variable, use useEffect hook to rerender 
+    // component on change and also use localStorage to keep the value saved on accidental refresh
     // declare the hooks with use_______ for naming convention
     function useLocalStorageState(key, defaultValue=''){
       const [state, setState] = React.useState(
