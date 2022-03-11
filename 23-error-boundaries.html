@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <!-- NOTE: Error bourdary -->
+  <script src="https://unpkg.com/react-error-boundary@1.2.5/dist/umd/react-error-boundary.js"></script>
+  <title>Document</title>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // ErrorBoundary can only handle certain errors.
+    // Like error in React call stack like render method or useEffect method
+    // wont handle error happening in event handler or for any async
+    // callback or promise
+
+    // NOTE:
+    // class to handle error
+    // in react its called errorBoundary component
+    /* class ErrorBoundary extends React.Component{
+      state = {error: null}
+      static getDerivedStateFromError(error){
+        return {error}
+      }
+      render(){
+        const {error} = this.state;
+        if(error){
+          return <div><this.props.fallbackComponent error={error}/></div>
+        }
+        return this.props.children
+      }
+    } */
+
+    // NOTE: instead of declaring the error boundary class we can use the 
+    // react-error-boundary library
+    const ErrorBoundary = ReactErrorBoundary.ErrorBoundary
+    // NOTE:
+    // this component returns the content which should be shown if there 
+    // is any error occured
+    function ErrorFallback({error}){
+      
+      return (
+        <div>
+          <p>Something went wrong:</p>
+          <p>{error.message}</p>
+        </div>
+      )
+    }
+
+    // NOTE:
+    // the component which threw the error
+    function Bomb(){
+      throw new Error('💥Ka-Boom 💥')
+    }
+
+    
+
+    function App(){
+      const [explode, setExplode] = React.useState(false)
+
+      // React.useEffect(()=>{
+      //   Bomb()
+      // }, [explode])
+
+      // NOTE:
+      // Error boundary can handle any error thrown by it's descendents
+      // we can use error boundary at main component level and also at
+      // more specific component level.
+      // Error boundary will be handled by the boundary nearest to the
+      // component
+      return (
+        <ErrorBoundary fallbackComponent={ErrorFallback}>
+          <div>
+            <div>
+              <button onClick={()=> setExplode(true)}>💣</button>
+            </div>
+            <ErrorBoundary fallbackComponent={ErrorFallback}>
+
+              {explode? <Bomb/> : 'Push the button to crash your application!'}
+            </ErrorBoundary>
+          </div>
+        </ErrorBoundary>
+      )
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('root'))
+    
+    
+  </script> 
+</body>
+
+</html>

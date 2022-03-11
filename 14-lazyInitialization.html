@@ -21,6 +21,8 @@
 
     // NOTE: lazy loading, give a callback function in useState which will only run 
     // when necessary
+    // which basically mean when first loading the page, this will run for first render
+    // but for sub-sequent renders, this will not run unit unless not necessary
     function Greeting(){
       const [name, setName] = React.useState(
         () => {
