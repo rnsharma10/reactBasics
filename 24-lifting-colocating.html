@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <!-- NOTE: Error bourdary -->
+  <script src="https://unpkg.com/react-error-boundary@1.2.5/dist/umd/react-error-boundary.js"></script>
+  <title>Document</title>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // note: lifting - moving state to upper component
+    // note: colocating - shifting the state down the specific component
+    function Name({name, onNameChange}){
+      return (
+        <div>
+          <label>Name</label>  
+          <input value={name} onChange={onNameChange}/>
+        </div>
+      )
+    }
+
+    function FavoriteAnime({anime, onAnimeChange}){
+      // NOTE: since we want to pass the state anime to another component we need to
+      // lift this state to the common component of both component which are going to use 
+      // this state.
+      // NOTE: for this example it's App component
+      // const [anime, setAnime] = React.useState('')
+      return (
+        <div>
+          <label>Favorite Anime: </label>
+          <input 
+            value={anime}
+            onChange={onAnimeChange}
+          />
+        </div>
+      )
+    }
+
+    function Display({name, anime}){
+      return <div>{`Hey ${name}, you are great! and your favorite anime ${anime} is also good.`}</div>
+    }
+    function App(){
+      const [name, setName] = React.useState('')
+      const [anime, setAnime] = React.useState('')
+
+      return (
+        <form >
+          <Name
+            name={name}
+            onNameChange={event => setName(event.target.value)}
+          />
+          <FavoriteAnime anime={anime} onAnimeChange={event => setAnime(event.target.value)}/>
+          <Display name={name} anime={anime} />
+        </form>
+      )
+    }
+    ReactDOM.render(<App/>, document.getElementById('root'))
+    
+    
+  </script> 
+</body>
+
+</html>

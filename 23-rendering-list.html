@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- NOTE: libraries imported -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.13.12/babel.js"></script>
+  <!-- NOTE: Error bourdary -->
+  <script src="https://unpkg.com/react-error-boundary@1.2.5/dist/umd/react-error-boundary.js"></script>
+  <title>Document</title>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const myItems = [
+      {id: 'b', value:'blue'},
+      {id: 'r', value:'red'},
+      {id: 'g', value:'green'},
+      {id: 'o', value:'orange'}
+    ]
+
+    function App(){
+      const [items, setItems] = React.useState(myItems)
+
+      function addItem(item){
+        // setItems([...items, myItems.find(i => !items.includes(i))])
+        setItems([...items, ...myItems.filter(i => !items.includes(i))])
+
+      }
+
+      function removeItem(item){
+        setItems(items.filter(i => i !== item))
+      }
+
+      return (
+        <div>
+          <button disabled={items.length >= myItems.length} onClick={addItem}>
+            Add Item
+          </button>
+          
+          {/*NOTE: we should give key prop to each looping item so that react knows
+            the place which needs to be updated/rerendered.
+          */}
+          <ul style={{listStyle:'none', paddingLeft:0}}>
+            {items.map(item => (
+              <li key={item.id}>
+                <button onClick={() => removeItem(item)}>remove</button>
+                <label htmlFor={`${item.value}-input`}>{item.value}</label>
+                <input id={`${item.value}-input`} defaultValue={item.value} type="text"/>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('root'))
+    
+    
+  </script> 
+</body>
+
+</html>
