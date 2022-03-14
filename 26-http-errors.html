@@ -21,7 +21,11 @@
   <script type="text/babel">
     
     function PokemonInfo({pokemonName}){
+      // note: use common status as the progress status in whole api fetch
+      // we can also use it for error handling to show error on rejected status
+      const [status, setStatus] = React.useState('idle')
       const [pokemon, setPokemon] = React.useState(null)
+      const [error, setError] = React.useState(null)
 
       // note: on change of pokemonName state we will fetch the pokemon
       // the pokemonName will be set on form submission
@@ -30,32 +34,45 @@
         if(!pokemonName){
           return
         }
-
+        setStatus('pending')
         fetchPokemon(pokemonName).then(
           pokemonData => {
+            setStatus('successful')
             // note: set the pokemonInfo state pokemon which will start rerender
             setPokemon({pokemonData})
             // console.log(typeof pokemonData)
+          },
+          err => {
+            setStatus('rejected')
+            setError(err.message)
           }
+
         )
       }, [pokemonName])
 
       // note: show this before form submission
-      if(!pokemonName){
+      if(status === 'idle'){
         return <>submit a pokemon</>
       }
 
-      // note: show this after form submission(pokemonBane set) till we wait
-      // and pokemon is also set
-      if (!pokemon){
+      // note: on error 
+      if(status === 'rejected'){
+        return 'error: '+ error
+      }
+
+      // note: on api fetch waiting
+      if (status === 'pending'){
         return ('...')
       }
       
-      return (
-        <pre>
-          {JSON.stringify(pokemon, null, 2)}
-        </pre>
-      )
+      // note: on api response success
+      if (status === 'successful'){
+        return (
+          <pre>
+            {JSON.stringify(pokemon, null, 2)}
+          </pre>
+        )
+      }
     }
 
     // note: api pokemon fetch
